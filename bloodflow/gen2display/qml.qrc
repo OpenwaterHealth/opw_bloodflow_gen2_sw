@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>CameraCalibration.qml</file>
+        <file>CommonDefinitions.qml</file>
+        <file>HomeScreen.qml</file>
+        <file>LaserEnergyScreen.qml</file>
+        <file>MaintainanceHomeScreen.qml</file>
+        <file>ModuleSelector.qml</file>
+        <file>ModuleStatus.qml</file>
+        <file>OnScreenKeyboard.qml</file>
+        <file>PasswordScreen.qml</file>
+        <file>PlacementScreen.qml</file>
+        <file>ScanCompleteScreen.qml</file>
+        <file>images/Head.png</file>
+        <file>images/Headset.png</file>
+        <file>images/LaserWarning.png</file>
+        <file>images/OpenwaterLogo.png</file>
+        <file>images/check.png</file>
+        <file>images/countdown.png</file>
+        <file>images/cross.svg</file>
+        <file>images/error.png</file>
+        <file>images/home.svg</file>
+        <file>images/powerButton.png</file>
+        <file>main.cpp</file>
+        <file>main.qml</file>
+        <file>images/PlacementGuide.png</file>
+        <file>images/notification.png</file>
+        <file>ErrorPopup.qml</file>
+        <file>InfoPopup.qml</file>
+        <file>PatientDataView.qml</file>
+        <file>SplashScreen.qml</file>
+        <file>CustomTreeView.qml</file>
+        <file>FileManager.qml</file>
+        <file>images/file.png</file>
+        <file>images/folderclosed.png</file>
+        <file>images/folderopen.png</file>
+    </qresource>
+</RCC>
