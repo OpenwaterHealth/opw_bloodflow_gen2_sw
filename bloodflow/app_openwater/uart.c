@@ -1,0 +1,299 @@
+// Adapted from http://gaiger-programming.blogspot.com/2015/03/simple-linux-serial-port-programming-in.html
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <syslog.h>
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <termios.h> /*termio.h for serial IO api*/
+
+#include <pthread.h> /* POSIX Threads */
+
+#include "app_common.h"
+#include "jsmn.h"
+#include "uart.h"
+
+pthread_mutex_t sendMessageLock;
+
+const char* commandMessage[384] = {0};
+const char* responseMessage[17408] = {0};
+/*
+ * The values for speed are
+ * B115200, B230400, B9600, B19200, B38400, B57600, B1200, B2400, B4800, etc
+ *
+ *  The values for parity are 0 (meaning no parity),
+ * PARENB|PARODD (enable parity and use odd),
+ * PARENB (enable parity and use even),
+ * PARENB|PARODD|CMSPAR (mark parity),
+ * and PARENB|CMSPAR (space parity).
+ * */
+
+/*
+ * if waitTime  < 0, it is blockmode
+ *  waitTime in unit of 100 millisec : 20 -> 2 seconds
+ */
+
+int setInterfaceAttribs(int fd, int speed, int parity, int waitTime)
+{
+    int isBlockingMode;
+    struct termios tty;
+
+    isBlockingMode = 0;
+    if (waitTime < 0 || waitTime > 255)
+        isBlockingMode = 1;
+
+    memset(&tty, 0, sizeof tty);
+    if (tcgetattr(fd, &tty) != 0) /* save current serial port settings */
+    {
+        printf("[UART] __LINE__ = %d, error %s\n", __LINE__, strerror(errno));
+        return -1;
+    }
+
+    cfsetospeed(&tty, speed);
+    cfsetispeed(&tty, speed);
+
+    tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8; // 8-bit chars
+    // disable IGNBRK for mismatched speed tests; otherwise receive break
+    // as \000 chars
+    tty.c_iflag &= ~IGNBRK;                                 // disable break processing
+    tty.c_lflag = 0;                                        // no signaling chars, no echo,
+                                                            // no canonical processing
+    tty.c_oflag = 0;                                        // no remapping, no delays
+    tty.c_cc[VMIN] = (1 == isBlockingMode) ? 1 : 0;         // read doesn't block
+    tty.c_cc[VTIME] = (1 == isBlockingMode) ? 0 : waitTime; // in unit of 100 milli-sec for set timeout value
+
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl
+
+    tty.c_cflag |= (CLOCAL | CREAD);   // ignore modem controls,
+                                       // enable reading
+    tty.c_cflag &= ~(PARENB | PARODD); // shut off parity
+    tty.c_cflag |= parity;
+    tty.c_cflag &= ~CSTOPB;
+    tty.c_cflag &= ~CRTSCTS;
+
+    if (tcsetattr(fd, TCSANOW, &tty) != 0)
+    {
+        printf("[UART] __LINE__ = %d, error %s\n", __LINE__, strerror(errno));
+        return -1;
+    }
+
+    return 0;
+} /*setInterfaceAttribs*/
+
+int sendResponseMessage2(int fd, const char *msg)
+{
+
+    int result = 0;
+    size_t bytes_sent = 0;
+    size_t msg_len = 0;
+    size_t chunk_size = 8192; // send 8K bytes at a time
+
+    if (fd < 0) {
+        printf("[OW_MAIN] Error serial port is not valid\n");   
+        return 0;
+    }
+
+    pthread_mutex_lock(&sendMessageLock);
+
+    msg_len = strlen(msg);
+
+    while (bytes_sent < msg_len) {
+        size_t remaining_bytes = msg_len - bytes_sent;
+        size_t n = remaining_bytes < chunk_size ? remaining_bytes : chunk_size;
+
+        size_t bytes_written = write(fd, msg + bytes_sent, n);
+
+        if (bytes_written <= 0) {
+            result = -1;
+            syslog(LOG_ERR, "[UART::sendResponseMessage] UART port write failed\n");
+            break;
+        }
+
+        bytes_sent += bytes_written;
+        tcdrain(fd);
+    }
+
+    pthread_mutex_unlock(&sendMessageLock);
+
+    return result;
+}
+
+int sendResponseMessage(int fd, ow_app_content_t content, ow_system_state_t state, ow_app_commands_t cmd, const char *params, const char *msg, const char *data)
+{
+    // printf("enter sendMessage handle: %d msg: %s\n", fd, message);
+    int result;
+    size_t msg_len = 0;
+    size_t bytes_sent = 0;
+
+    if(fd<0){
+        printf("[OW_MAIN] Error serial port is not valid\n");   
+        return 0;
+    }
+
+    pthread_mutex_lock(&sendMessageLock);
+    result = 0;
+    char writeBuff[17408] = {0};
+
+    sprintf(writeBuff, "{\"content\":\"%s\",\"state\":\"%s\",\"command\":\"%s\",\"params\":\"%s\",\"msg\":\"%s\",\"data\":%s}\r\n",
+        OW_APP_CONTENT_STRING[content], OW_SYSTEM_STATE_STRING[state], OW_APP_COMMAND_STRING[cmd], params != NULL?params:"", msg != NULL?msg:"", content == OW_CONTENT_DATA?data:"[]");
+
+    msg_len = strlen(writeBuff);
+    while (bytes_sent < msg_len) {
+        size_t n = write(fd, writeBuff, strlen(writeBuff));
+        if (n <= 0) {
+            result = -1;
+            syslog(LOG_ERR, "[UART::sendResponseMessage] UART port write failed\n");
+            break;
+        }
+
+        bytes_sent += n;
+        tcdrain(fd);
+    }
+    pthread_mutex_unlock(&sendMessageLock);
+    return result;
+}
+
+int readData(int fd, unsigned char *buffer, int buf_len)
+{
+    int len = 0;
+    memset(buffer, '\0', sizeof(unsigned char)*buf_len);
+    pthread_mutex_lock(&sendMessageLock);
+    while (len >= 0 && len < buf_len)
+    {
+        len += read(fd, buffer + len, buf_len - len);
+        if (len > 0 && (buffer[len - 1] == '\0' || buffer[len - 1] == '\n'))
+        {
+            break;
+        }
+    }
+
+    pthread_mutex_unlock(&sendMessageLock);
+    return len;
+}
+
+int openSerialPort(const char *path)
+{
+    int retfd = 0;
+
+    retfd = open(path, O_RDWR | O_NOCTTY | O_SYNC);
+    if(0 > retfd)
+    {
+        printf("[UART] Failed to open Serial port: %s \n", path);
+        return -1;
+    }
+    else
+    {
+        int res = 0;
+        res = setInterfaceAttribs(retfd, B460800, 0, -1); /* set speed to 460800 bps, 8n1 (no parity), blocking*/
+
+        if (res == -1)
+        {
+            printf("[UART] Failed to set interface attribs\n");
+            if(retfd)
+            {
+                close(retfd);
+            }
+            return -1;
+        }
+
+        // create lock object
+        if (pthread_mutex_init(&sendMessageLock, NULL) != 0)
+        {
+            printf("[UART] sendMessageLock mutex init has failed\n");
+            if(retfd)
+            {
+                close(retfd);
+            }
+            return -1;
+        }
+    }
+
+    return retfd;
+
+}
+
+int closeSerialPort(int portHandle)
+{
+
+    if(portHandle)
+    {
+        pthread_mutex_destroy(&sendMessageLock);
+        close(portHandle);
+    }
+
+    return 0;
+}
+
+struct CmdMessage* parseJson(const char* jsonString)
+{
+    int i, r;
+    jsmn_parser p;
+    jsmntok_t t[128];
+
+    struct CmdMessage* pMsgRet = (struct CmdMessage*)commandMessage;
+    memset(pMsgRet, 0, sizeof(struct CmdMessage));
+
+    jsmn_init(&p);
+    r = jsmn_parse(&p, jsonString, strlen(jsonString), t, sizeof(t) / sizeof(t[0]));
+    if (r < 0)
+    {
+        printf("[ParseJSON] Failed to parse JSON: %d\n", r);
+        strcpy(pMsgRet->command, "error");
+        strcpy(pMsgRet->params, "Failed to parse JSON");
+        return pMsgRet;
+    }
+
+    /* Assume the top-level element is an object */
+    if (r < 1 || t[0].type != JSMN_OBJECT)
+    {
+        printf("[ParseJSON] failed Object expected\n");
+        strcpy(pMsgRet->command, "error");
+        strcpy(pMsgRet->params, "Failed to parse JSON Object expected");
+        return pMsgRet;
+    }
+
+    for (i = 1; i < r; i += 2)
+    {
+        char prop[128];
+
+        sprintf(prop, "%.*s", t[i].end - t[i].start,
+            (const char*)jsonString + t[i].start);
+
+        if (strcmp(prop, "command") == 0) {
+            sprintf(pMsgRet->command, "%.*s", t[i + 1].end - t[i + 1].start,
+                (const char*)jsonString + t[i + 1].start);
+        }
+        else if (strcmp(prop, "params") == 0) {
+            sprintf(pMsgRet->params, "%.*s", t[i + 1].end - t[i + 1].start,
+                (const char*)jsonString + t[i + 1].start);
+        }
+    }
+
+    return pMsgRet;
+}
+
+struct CmdMessage* getNextCommand(int fd)
+{
+    int len = 0;
+    int buf_len = 1024;
+    unsigned char buffer[1024];
+    memset(buffer, '\0', sizeof(unsigned char)*buf_len);
+    pthread_mutex_lock(&sendMessageLock);
+    while (len >= 0 && len < buf_len)
+    {
+        len += read(fd, buffer + len, buf_len - len);
+        if (len > 0 && (buffer[len - 1] == '\0' || buffer[len - 1] == '\n'))
+        {
+            break;
+        }
+    }
+    pthread_mutex_unlock(&sendMessageLock);
+    if (len > 0 && strlen((char *)buffer) > 0)
+    {
+        printf("[UART] Message Received: %s\n", (const char*)buffer);
+        return parseJson((const char*)buffer);
+    }
+    return NULL;
+}
