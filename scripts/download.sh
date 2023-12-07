@@ -7,7 +7,7 @@ download_and_extract_build_tools() {
     
     echo "Downloading and extracting TI build tools to $target_directory..."
     mkdir -p "$target_directory"
-    wget -q "$toolchain_url" -O - | tar -xJ -C "$target_directory" --strip-components=1
+    wget -q "$toolchain_url" -O - | tar -xJ -C "$target_directory"
     echo "TI build tools extracted to $target_directory"
 }
 

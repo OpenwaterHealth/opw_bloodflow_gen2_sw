@@ -55,8 +55,8 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
 
 2. **Download and Install the TI SDKs**:
    ```shell
-   git clone <repository URL>
-   cd Gen2Device
+   chmod +x scripts/download.sh
+   ./scripts/download.sh
 
 3. **Clone the Repository**:
    ```shell
