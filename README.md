@@ -45,6 +45,9 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
 - **TI Processor SDK**: 
   - [RTOS version 08.00.00.12](https://dr-download.ti.com/software-development/software-development-kit-sdk/MD-bA0wfI4X2g/08.00.00.12/ti-processor-sdk-rtos-j721e-evm-08_00_00_12.tar.gz)
   - [Linux version 08.00.00.08](https://dr-download.ti.com/software-development/software-development-kit-sdk/MD-U6uMjOroyO/08.00.00.08/ti-processor-sdk-linux-j7-evm-08_00_00_08-Linux-x86-Install.bin)
+- **Openwater TI Kernel and U-Boot**: 
+  - [ti-linux-kernel](https://github.com/OpenwaterInternet/ti-linux-kernel.git)
+  - [ti-u-boot](https://github.com/OpenwaterInternet/ti-u-boot.git)
 - **Python**: For running data analysis and visualization scripts.
 
 ### Setup and Installation
@@ -79,3 +82,7 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
 
    If you encounter any issues during the installation process or have specific installation requirements, please refer to the official documentation or contact our support team for assistance.
 
+5. **Replace U-Boot and Kernel with Openwater version**:
+   ```shell
+   chmod +x scripts/replace_kernel.sh
+   ./scripts/replace_kernel.sh
