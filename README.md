@@ -2,7 +2,10 @@
 
 ## Overview
 
-The Openwater Blood Flow Application repository is a comprehensive suite containing source code for the Gen2 Blood Flow Analysis Vision Application, including the vision application itself, DSP kernel for real-time image data processing, User Interface, and Python modules for data analysis and visualization.
+The Openwater Blood Flow Application repository is a comprehensive suite containing source code for the Gen2 Blood Flow Analysis Vision Application, including the vision application itself, DSP kernel for real-time image data processing, User Interface, and Python modules for data analysis and visualization. For a more detailed overview, please visit our [Wiki](https://github.com/OpenwaterInternet/opw_bloodflow_gen2_sw/wiki).
+
+## Software Architecture
+For a detailed understanding of the software architecture of this project, please refer to the [Software Architecture Guide](ARCHITECTURE.md).
 
 ## Repository Structure
 
@@ -34,6 +37,7 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
 
 - [/ti-processor-sdk](/ti-processor-sdk): TI TDA4VM processor SDK directory.
   
+
 ## Getting Started
 
 For detailed instructions on setting up your development environment and getting started with this project, please refer to the [Getting Started Guide](GETTING_STARTED.md).
