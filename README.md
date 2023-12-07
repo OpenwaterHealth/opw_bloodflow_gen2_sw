@@ -49,16 +49,33 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
 
 ### Setup and Installation
 
-1. **Install Required Host Packages**:
+1. **Clone the Repository**:
+   ```shell
+   git clone git@github.com:OpenwaterInternet/opw_bloodflow_gen2_sw.git
+   cd opw_bloodflow_gen2_sw
+
+2. **Install Required Host Packages**:
    ```shell
    sudo apt-get install build-essential autoconf automake bison flex libssl-dev bc u-boot-tools
 
-2. **Download and Install the TI SDKs**:
+3. **Download and Extract the TI SDKs and Tools**:
    ```shell
    chmod +x scripts/download.sh
    ./scripts/download.sh
 
-3. **Clone the Repository**:
-   ```shell
-   git clone <repository URL>
-   cd Gen2Device
+4. **Install TI Processor SDK Linux**:
+
+   **Note**: The installation process for TI Processor SDK Linux involves a graphical user interface (UI). Please follow these steps to navigate the UI installation:
+
+   - Run the following command to start the installation process:
+
+     ```shell
+     ./ti-processor-sdk/ti-processor-sdk-linux-j7-evm-08_00_00_08-Linux-x86-Install.bin --prefix "$(pwd)/ti-processor-sdk/ti-processor-sdk-linux-j7-evm-08_00_00_08"
+     ```
+
+   - The installer will launch a graphical UI. Follow the on-screen instructions to complete the installation. 
+
+   - Once the installation is complete, the TI Processor SDK Linux will be installed in the specified directory.
+
+   If you encounter any issues during the installation process or have specific installation requirements, please refer to the official documentation or contact our support team for assistance.
+
