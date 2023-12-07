@@ -21,11 +21,11 @@ The software architecture follows a layered approach:
 
 High Level Software Component Diagram
 
-- ![Openwater System Diagram](docs/ow_system_diagram.png)
+![Openwater System Diagram](docs/ow_system_diagram.png)
 
 High Level Data Flow Diagram
 
-- ![Openwater Data Flow Diagram](docs/ow_dataflow_diagram.png)
+![Openwater Data Flow Diagram](docs/ow_dataflow_diagram.png)
 
 ## Use Cases
 - Initiating blood flow analysis.
