@@ -98,3 +98,5 @@ After successfully building the TI Processor SDK Linux, the `targetNFS` director
 
 If you encounter any build errors or issues during this step, please refer to the troubleshooting section in this guide or contact our support team for assistance.
 
+cd ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/
+./ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/psdk_rtos/scripts/setup_psdk_rtos.sh 
