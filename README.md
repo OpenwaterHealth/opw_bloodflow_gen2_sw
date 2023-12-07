@@ -21,15 +21,23 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
 ### Python Data Analysis Module
 
 - `/bloodflow/app_python`: Python module for analyzing collected data and generating visualizations.
-- 
+  
 ## Getting Started
 
 ### Prerequisites
 
-- Necessary development tools and SDKs installed.
-- Understanding of DSP, image processing, and Python data analysis.
+- **Operating System**: Linux-based system (Ubuntu 18.04) or Windows 10 with WSL2 running Ubuntu 18.04.
+- **TI Processor SDK**: 
+  - RTOS version 08.00.00.12.
+  - Linux version 08.00.00.08.
+- **Python**: For running data analysis and visualization scripts.
 
 ### Setup and Installation
+
+1. **Clone the Repository**:
+   ```shell
+   git clone <repository URL>
+   cd Gen2Device
 
 1. **Clone the Repository**:
    ```shell
