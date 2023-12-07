@@ -98,3 +98,27 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
    - Once the installation is complete, the TI Processor SDK Linux will be setup in the specified directory.
 
    If you encounter any issues during the installation process or have specific installation requirements, please refer to the official documentation or contact our support team for assistance.
+
+6. **Test Build Processor SDK Linux**:
+
+   **Note**: For running on WSL2 you must ensure that your PATH variable is set to only linux paths something like below will work:
+      ```shell
+      # Get the current PATH variable
+      current_path="$PATH"
+
+      # Remove everything after and including the first instance of /mnt/c
+      new_path=$(echo "$current_path" | sed 's|/mnt/c.*||')
+
+      # Update the PATH variable
+      export PATH="$new_path"
+
+      # Print the updated PATH
+      echo "Updated PATH: $PATH"
+
+   - Run the following command to build the TI Processor Linux SDK:
+      ```shell
+      source ./scripts/set_gcc_path.sh
+      cd ti-processor-sdk/ti-processor-sdk-linux-j7-evm-08_00_00_08/
+      make clean
+      make 
+
