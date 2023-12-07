@@ -1,0 +1,11 @@
+# Ignore all contents in the ti-build-tools directory
+/ti-build-tools/*
+
+# Except for the root README.md in ti-build-tools
+!/ti-build-tools/README.md
+
+# Ignore all contents in the ti-processor-sdk directory
+/ti-processor-sdk/*
+
+# Except for the root README.md in ti-processor-sdk
+!/ti-processor-sdk/README.md
