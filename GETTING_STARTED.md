@@ -97,20 +97,37 @@ Welcome to the Openwater Blood Flow Application! This guide will help you set up
       make clean
       make 
       make install
+
+      # After build is complete cd back to ther root of the repository
+      cd ../../
       ```
    After successfully building the TI Processor SDK Linux, the `targetNFS` directory will be updated with the latest build artifacts from the processor SDK Linux. These artifacts are essential for booting the Openwater hardware device.
 
-   If you encounter any build errors or issues during this step, please refer to the troubleshooting section in this guide or contact our support team for assistance.
+   If you encounter any build errors or issues during this step, please refer to the TI Documentation in the additional resources section above or contact our support team for assistance.
 
 7. **Setup TI Processor SDK RTOS**:
    ```shell
    cd ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/
    ./psdk_rtos/scripts/setup_psdk_rtos.sh 
-   # after installation is complete cd back to ther root of the repository
+
+   # After installation is complete cd back to ther root of the repository
    cd ../../
    ```
-7. **Set the target filesystem common to both SDks**:
+8. **Set the target filesystem common to both SDks**:
    ```shell
    chmod +x scripts/common_targetfs.sh
    ./scripts/common_targetfs.sh
    ```
+
+9. **Test Build Processor SDK RTOS**:
+   ```shell
+   cd ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/vision_apps
+   make sdk_check_paths
+   make sdk
+   make linux_fs_install
+   ```
+
+   After successfully building the TI Processor SDK RTOS, the `targetNFS` directory in the TI Processor SDK Linux will be updated with the latest build artifacts from the processor SDK RTOS. These artifacts are essential for Vision Applications to run.
+
+   If you encounter any build errors or issues during this step, please refer to the TI Documentation in the additional resources section above or contact our support team for assistance.
+
