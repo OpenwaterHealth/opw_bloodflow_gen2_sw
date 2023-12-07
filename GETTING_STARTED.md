@@ -98,9 +98,14 @@ Welcome to the Openwater Blood Flow Application! This guide will help you set up
       make 
       make install
       ```
-After successfully building the TI Processor SDK Linux, the `targetNFS` directory will be updated with the latest build artifacts from the processor SDK Linux. These artifacts are essential for booting the Openwater hardware device.
+   After successfully building the TI Processor SDK Linux, the `targetNFS` directory will be updated with the latest build artifacts from the processor SDK Linux. These artifacts are essential for booting the Openwater hardware device.
 
-If you encounter any build errors or issues during this step, please refer to the troubleshooting section in this guide or contact our support team for assistance.
+   If you encounter any build errors or issues during this step, please refer to the troubleshooting section in this guide or contact our support team for assistance.
 
-cd ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/
-./ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/psdk_rtos/scripts/setup_psdk_rtos.sh 
+7. **Setup TI Processor SDK RTOS**:
+   ```shell
+   cd ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12/
+   ./psdk_rtos/scripts/setup_psdk_rtos.sh 
+   # after installation is complete cd back to ther root of the repository
+   cd ../../
+   ```

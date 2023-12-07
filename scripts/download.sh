@@ -70,5 +70,5 @@ download_and_extract_build_tools "$build_tools_uboot_url" "$build_tools_director
 # Download and extract TI Processor SDK
 download_and_extract_processor_sdk "$processor_sdk_rtos_url" "$processor_sdk_directory"
 download_and_make_executable_processor_sdk "$processor_sdk_linux_url" "$processor_sdk_directory"
-download_only "$tisdk_default_image_url" "$processor_sdk_directory"
-download_only "$tisdk_boot_image_url" "$processor_sdk_directory"
+download_only "$tisdk_default_image_url" "$processor_sdk_directory/ti-processor-sdk-rtos-j721e-evm-08_00_00_12"
+download_only "$tisdk_boot_image_url" "$processor_sdk_directory/ti-processor-sdk-rtos-j721e-evm-08_00_00_12"
