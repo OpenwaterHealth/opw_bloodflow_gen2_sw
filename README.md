@@ -86,3 +86,15 @@ The Openwater Blood Flow Application repository is a comprehensive suite contain
    ```shell
    chmod +x scripts/replace_kernel.sh
    ./scripts/replace_kernel.sh
+
+5. **Setup TI Processor SDK Linux**:
+
+   **Note**: The setup process for TI Processor SDK Linux involves a console interface. Please follow these steps to navigate the installation no changes to the defaults should be required:
+
+   - Run the following command to start the setup process:
+      ```shell
+      ./ti-processor-sdk/ti-processor-sdk-linux-j7-evm-08_00_00_08/setup.sh
+
+   - Once the installation is complete, the TI Processor SDK Linux will be setup in the specified directory.
+
+   If you encounter any issues during the installation process or have specific installation requirements, please refer to the official documentation or contact our support team for assistance.
