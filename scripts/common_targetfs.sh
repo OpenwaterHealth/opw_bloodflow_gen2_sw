@@ -2,7 +2,7 @@
 
 # Define paths
 rtos_sdk_dir="ti-processor-sdk/ti-processor-sdk-rtos-j721e-evm-08_00_00_12"
-linux_sdk_dir="ti-processor-sdk/ti-processor-sdk-linux-j7-evm-08_00_00_08"
+linux_sdk_dir="../ti-processor-sdk-linux-j7-evm-08_00_00_08"
 
 # Check if the targetfs directory exists in the RTOS SDK directory
 if [ -d "$rtos_sdk_dir/targetfs" ]; then

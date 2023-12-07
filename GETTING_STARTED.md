@@ -111,5 +111,6 @@ Welcome to the Openwater Blood Flow Application! This guide will help you set up
    ```
 7. **Set the target filesystem common to both SDks**:
    ```shell
+   chmod +x scripts/common_targetfs.sh
    ./scripts/common_targetfs.sh
    ```
