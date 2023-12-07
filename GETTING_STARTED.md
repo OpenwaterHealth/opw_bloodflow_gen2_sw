@@ -2,6 +2,10 @@
 
 Welcome to the Openwater Blood Flow Application! This guide will help you set up your development environment and get started with the project.
 
+## Additional Resources
+- [Texas Instruments - PROCESSOR-SDK-LINUX-J721E](https://software-dl.ti.com/jacinto7/esd/processor-sdk-linux-jacinto7/08_00_00_08/exports/docs/linux/Overview.html)
+- [Texas Instruments - Processor SDK RTOS J721E](https://software-dl.ti.com/jacinto7/esd/processor-sdk-rtos-jacinto7/08_00_00_12/exports/docs/psdk_rtos/docs/user_guide/index.html)
+
 ### Prerequisites
 
 - **Operating System**: Linux-based system (Ubuntu 18.04) or Windows 10 with WSL2 running Ubuntu 18.04.
