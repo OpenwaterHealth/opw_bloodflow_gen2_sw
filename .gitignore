@@ -9,3 +9,5 @@
 
 # Except for the root README.md in ti-processor-sdk
 !/ti-processor-sdk/README.md
+
+.vscode/

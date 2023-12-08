@@ -16,7 +16,7 @@ delete_directory() {
     local dir="$1"
     if [ -d "$dir" ]; then
         echo "Deleting $dir..."
-        rm -r "$dir"
+        sudo rm -r "$dir"
         echo "Deleted $dir"
     else
         echo "$dir does not exist. No action taken."
@@ -25,8 +25,8 @@ delete_directory() {
 
 # Function to clone repositories
 clone_repositories() {
-    local kernel_repo_url="https://github.com/OpenwaterInternet/ti-linux-kernel.git"
-    local uboot_repo_url="https://github.com/OpenwaterInternet/ti-u-boot.git"
+    local kernel_repo_url="https://github.com/OpenwaterHealth/ti-linux-kernel.git"
+    local uboot_repo_url="https://github.com/OpenwaterHealth/ti-u-boot.git"
         
     echo "Cloning TI Linux Kernel into linux-kernel-opw..."
     git clone "$kernel_repo_url" ti-processor-sdk/ti-processor-sdk-linux-j7-evm-08_00_00_08/board-support/linux-kernel-opw

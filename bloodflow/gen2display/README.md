@@ -10,6 +10,13 @@ The UI application gives the user the ability to:
 - Transfer data recordings to a USB flash drive
 - Install software updates delivered via flash drive
 
+# User Documentation
+User Guide:
+https://docs.google.com/document/d/1KtrLJ_kjrIWFhRTz3GcrUFAJ7LChcWwhtGG9w_1jLhs/edit
+
+Software Update Instructions:
+https://docs.google.com/document/d/1q8FWDact6j7lssCdk108j4u4Z8-eMeLwroqNSnHM9Sg/edit
+
 ## Configuring QT Creator to Cross Compile for TDA4
 
 1. Install QT Creator v5.12. Skip this if you already have the Reach VM running with it preinstalled.
