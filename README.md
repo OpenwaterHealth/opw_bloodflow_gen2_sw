@@ -29,6 +29,10 @@ For a detailed understanding of the software architecture of this project, pleas
 
 - [/scripts](/scripts): Scripts directory that contains helper scripts for environment setup and building.
 
+### Target Filesystem Configuration
+
+- [/targetNFS](/targetNFS): configuration and additional packages needed for the Linux root filesystem.
+
 ### Build Tools
 
 - [/ti-build-tools](/ti-build-tools): Required build tools for building the system components.
