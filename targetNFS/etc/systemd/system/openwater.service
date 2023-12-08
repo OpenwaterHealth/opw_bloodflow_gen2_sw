@@ -1,0 +1,11 @@
+[Unit]
+Description="Openwater Application"
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /opt/vision_apps/openwater.sh
+ExecStartPre=/bin/sleep 8
+
+[Install]
+WantedBy=multi-user.target
+

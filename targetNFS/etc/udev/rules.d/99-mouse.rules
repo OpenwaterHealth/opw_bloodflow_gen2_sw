@@ -1,0 +1,5 @@
+ACTION!="remove", KERNEL=="event[0-9]*", \
+   ENV{ID_VENDOR_ID}=="222a", \
+   ENV{ID_MODEL_ID}=="0001", \
+   ENV{ID_USB_INTERFACE_NUM}=="01", \
+   ENV{LIBINPUT_IGNORE_DEVICE}="1"

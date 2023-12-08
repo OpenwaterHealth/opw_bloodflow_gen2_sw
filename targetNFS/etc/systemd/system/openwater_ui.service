@@ -1,0 +1,11 @@
+[Unit]
+Description=Openwater UI
+
+[Service]
+ExecStart=/home/root/Gen2GUI.bin -platform linuxfb
+ExecStartPre=/bin/sleep 5
+#Environment=QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/plugins/platforms
+Environment=XDG_RUNTIME_DIR=/tmp/0-runtime-dir
+
+[Install]
+WantedBy=multi-user.target
