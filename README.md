@@ -4,18 +4,18 @@
 
 The Openwater Blood Flow Analysis Device is an innovative diagnostic tool designed to non-invasively measure and monitor cerebral blood flow. Utilizing advanced near-infrared light techniques, it facilitates the detection of hemodynamic changes associated with various medical conditions, particularly cerebrovascular events like strokes.
 
-The Openwater Blood Flow Application repository is a comprehensive suite containing source code for the Gen2 Blood Flow Analysis Vision Application, including the vision application itself, DSP kernel for real-time image data processing, User Interface, and Python modules for data analysis and visualization. For a more detailed overview, please visit our [Wiki](http://162.246.254.83/index.php/Main_Page).
+The Openwater Blood Flow Application repository is a comprehensive suite containing source code for the Gen2 Blood Flow Analysis Vision Application, including the vision application itself, DSP kernel for real-time image data processing, User Interface, and Python modules for data analysis and visualization. For a more detailed overview, please visit our [Wiki](https://wiki.openwater.health/index.php/Main_Page).
 
 ## Technology Description
 
-Openwater Stroke Diagnosis Technology [Technology Paper](http://162.246.254.83/index.php/Openwater_Stroke_Diagnosis_Technology)
+Openwater Stroke Diagnosis Technology [Technology Paper](https://wiki.openwater.health/index.php/Openwater_Stroke_Diagnosis_Technology)
 
 ## Hardware Reference
 
 For a detailed understanding of the hardware used by this software repository, please refer to the [Hardware Documentation](https://github.com/OpenwaterHealth/opw_bloodflow_gen2_hw)
 
 ## Software Architecture
-For a detailed understanding of the software architecture of this project, please refer to the [Software Architecture Guide](http://162.246.254.83/index.php/Blood_Flow_Gen_2_Software_Architecture).
+For a detailed understanding of the software architecture of this project, please refer to the [Software Architecture Guide](https://wiki.openwater.health/index.php/Blood_Flow_Gen_2_Software_Architecture).
 
 ## Repository Structure
 
