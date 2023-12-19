@@ -40,7 +40,7 @@ link_code_directories() {
 
 # Function to clone repositories
 clone_repositories() {
-    local sdk_repo_url="https://github.com/OpenwaterHealth/opw-processor-sdk.git"
+    local sdk_repo_url="https://github.com/OpenwaterHealth/ti-processor-sdk.git"
             
     echo "Cloning Openwater TI Processor SDK changes into ti-processor-sdk..."
     if ! git clone "$sdk_repo_url" ti-processor-sdk/opw-processor-sdk; then
